@@ -13,8 +13,12 @@ import {
     Edit2,
     Bell,
     Shield,
-    ArrowLeft
+    ArrowLeft,
+    Sparkles,
+    LayoutDashboard
 } from "lucide-react";
+import { doc, updateDoc } from "firebase/firestore";
+import { firebaseDb } from "../../lib/firebase";
 
 export default function ProfilePage() {
     const { user, loading, logout } = useAuth();
@@ -80,10 +84,27 @@ export default function ProfilePage() {
                         </h1>
                         <p className="text-zinc-400 text-sm">{user.firebaseUser.email}</p>
 
-                        <div className="mt-4 flex items-center gap-2">
+                        <div className="mt-4 flex flex-col items-center gap-3">
                             <span className="rounded-full bg-amber-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-500 border border-amber-500/20">
                                 {user.role} Member
                             </span>
+
+                            {/* Tester Tool: Toggle Role */}
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-[10px] text-zinc-500 hover:text-amber-500"
+                                onClick={async () => {
+                                    const newRole = user.role === "astrologer" ? "user" : "astrologer";
+                                    const userRef = doc(firebaseDb, "users", user.firebaseUser.uid);
+                                    await updateDoc(userRef, { role: newRole });
+                                    // Refresh page to trigger AuthContext reload or just alert the user
+                                    window.location.reload();
+                                }}
+                            >
+                                <Sparkles className="h-3 w-3 mr-1" />
+                                {user.role === "astrologer" ? "Switch to User Role" : "Become an Astrologer (Test)"}
+                            </Button>
                         </div>
                     </section>
 
@@ -132,6 +153,15 @@ export default function ProfilePage() {
 
                     {/* Danger Zone */}
                     <section className="pt-4">
+                        {user.role === "astrologer" && (
+                            <Button
+                                className="w-full h-12 rounded-2xl bg-amber-500 text-black hover:bg-amber-400 mb-3 font-semibold shadow-lg shadow-amber-500/20"
+                                onClick={() => router.push("/astro")}
+                            >
+                                <LayoutDashboard className="h-4 w-4 mr-2" />
+                                Go to Astrologer Dashboard
+                            </Button>
+                        )}
                         <Button
                             variant="ghost"
                             className="w-full h-12 rounded-2xl bg-red-500/5 text-red-500 border border-red-500/10 hover:bg-red-500 hover:text-white transition-all font-medium"

@@ -2,7 +2,7 @@
 
 Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a modern platform built for seamless celestial guidance.
 
-![AstroCall Demo Flow](./docs/assets/demo.webp)
+
 
 ## 🌟 Key Features
 - **Real-time Video & Voice**: Crystal clear communication powered by LiveKit.

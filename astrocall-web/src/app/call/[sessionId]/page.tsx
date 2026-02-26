@@ -17,6 +17,7 @@ import {
   ParticipantTile,
   ControlBar,
   useTracks,
+  TrackRefContext,
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
 import "@livekit/components-styles";
@@ -246,7 +247,7 @@ export default function CallPage() {
             data-lk-theme="default"
             style={{ height: "100%", width: "100%" }}
           >
-            <MyVideoConference />
+            <MyVideoConference session={session} />
             <RoomAudioRenderer />
           </LiveKitRoom>
         )}
@@ -308,7 +309,7 @@ export default function CallPage() {
   );
 }
 
-function MyVideoConference() {
+function MyVideoConference({ session }: { session: Session | null }) {
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -318,9 +319,30 @@ function MyVideoConference() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 bg-zinc-950">
         <GridLayout tracks={tracks}>
-          <ParticipantTile />
+          <TrackRefContext.Consumer>
+            {(trackReference) => {
+              if (!trackReference) return <ParticipantTile />;
+
+              const isAstro = trackReference.participant.identity === session?.astroId;
+              const roleLabel = isAstro ? "Astrologer" : "You";
+
+              return (
+                <div className="relative h-full w-full">
+                  <ParticipantTile {...trackReference} />
+                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                    <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border ${isAstro
+                      ? "bg-amber-500/20 text-amber-200 border-amber-500/30"
+                      : "bg-blue-500/20 text-blue-200 border-blue-500/30"
+                      }`}>
+                      {roleLabel}
+                    </span>
+                  </div>
+                </div>
+              );
+            }}
+          </TrackRefContext.Consumer>
         </GridLayout>
       </div>
       <div className="p-4 bg-zinc-950 border-t border-zinc-900">
@@ -330,8 +352,8 @@ function MyVideoConference() {
             microphone: true,
             camera: true,
             chat: false,
-            screenShare: false,
-            leave: false, // We use our own leave button in the header
+            screenShare: true,
+            leave: false,
           }}
         />
       </div>
