@@ -1,4 +1,4 @@
-# AstroCall v1 ✨
+# AstroCall v1 
 
 Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a modern platform built for seamless celestial guidance.
 
@@ -64,4 +64,4 @@ npm run dev
 - **Astrologer**: `astro@test.com` / `password123`
 
 ---
-Built with ❤️ by Antigravity
+
