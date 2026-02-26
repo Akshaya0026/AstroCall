@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   signInWithRedirect,
+  signInWithEmailAndPassword,
   signOut,
   type User,
 } from "firebase/auth";
@@ -37,6 +38,7 @@ interface AuthContextValue {
   user: AppUser | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -108,13 +110,17 @@ export function AuthProvider({
     }
   }, [isSigningIn]);
 
+  const signInWithEmail = useCallback(async (email: string, pass: string) => {
+    await signInWithEmailAndPassword(firebaseAuth, email, pass);
+  }, []);
+
   const logout = useCallback(async () => {
     await signOut(firebaseAuth);
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, signInWithGoogle, logout }}
+      value={{ user, loading, signInWithGoogle, signInWithEmail, logout }}
     >
       {children}
     </AuthContext.Provider>
