@@ -1,7 +1,15 @@
 # AstroCall v1 
 
 Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a modern platform built for seamless celestial guidance.
+## 📸 Visual Tour
 
+| Premium Login | Astrologer Directory |
+| :---: | :---: |
+| ![Login](./docs/assets/login.png) | ![Astrologers](./docs/assets/astrologers.png) |
+
+| User Profile | Astrologer Dashboard |
+| :---: | :---: |
+| ![Profile](./docs/assets/profile.png) | ![Dashboard](./docs/assets/dashboard.png) |
 
 
 ## 🌟 Key Features
