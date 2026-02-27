@@ -59,8 +59,8 @@ export default function AstrologersPage() {
         {
           userId: user.firebaseUser.uid,
           astroId: astro.id,
-          status: "active",
-          startedAt: serverTimestamp(),
+          status: "pending",
+          createdAt: serverTimestamp(),
         },
       );
 

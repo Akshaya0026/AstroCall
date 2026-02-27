@@ -89,22 +89,9 @@ export default function ProfilePage() {
                                 {user.role} Member
                             </span>
 
-                            {/* Tester Tool: Toggle Role */}
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-[10px] text-zinc-500 hover:text-amber-500"
-                                onClick={async () => {
-                                    const newRole = user.role === "astrologer" ? "user" : "astrologer";
-                                    const userRef = doc(firebaseDb, "users", user.firebaseUser.uid);
-                                    await updateDoc(userRef, { role: newRole });
-                                    // Refresh page to trigger AuthContext reload or just alert the user
-                                    window.location.reload();
-                                }}
-                            >
-                                <Sparkles className="h-3 w-3 mr-1" />
-                                {user.role === "astrologer" ? "Switch to User Role" : "Become an Astrologer (Test)"}
-                            </Button>
+                            <span className="rounded-full bg-amber-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-500 border border-amber-500/20">
+                                {user.role} Member
+                            </span>
                         </div>
                     </section>
 

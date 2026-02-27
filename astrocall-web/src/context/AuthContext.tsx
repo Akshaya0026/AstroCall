@@ -37,8 +37,8 @@ export interface AppUser {
 interface AuthContextValue {
   user: AppUser | null;
   loading: boolean;
-  signInWithGoogle: () => Promise<void>;
-  signInWithEmail: (email: string, pass: string) => Promise<void>;
+  signInWithGoogle: (role?: Role) => Promise<void>;
+  signInWithEmail: (email: string, pass: string, role?: Role) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -69,11 +69,27 @@ export function AuthProvider({
         const snap = await getDoc(userRef);
 
         if (!snap.exists()) {
+          // Check for intended role in localStorage
+          const intendedRole = localStorage.getItem("intended_role") as Role || "user";
+
           await setDoc(userRef, {
-            role: "user",
+            role: intendedRole,
             createdAt: serverTimestamp(),
           });
-          setUser({ firebaseUser, role: "user" });
+
+          // If role is astrologer, create the astrologer profile document as well
+          if (intendedRole === "astrologer") {
+            const astroRef = doc(firebaseDb, "astrologers", firebaseUser.uid);
+            await setDoc(astroRef, {
+              name: firebaseUser.displayName || "New Astrologer",
+              isOnline: false,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+            }, { merge: true });
+          }
+
+          setUser({ firebaseUser, role: intendedRole });
+          localStorage.removeItem("intended_role");
         } else {
           const data = snap.data() as { role?: Role };
           setUser({
@@ -89,10 +105,11 @@ export function AuthProvider({
     return () => unsubscribe();
   }, []);
 
-  const signInWithGoogle = useCallback(async () => {
+  const signInWithGoogle = useCallback(async (role: Role = "user") => {
     if (isSigningIn) return;
     setIsSigningIn(true);
     try {
+      if (role) localStorage.setItem("intended_role", role);
       await signInWithPopup(firebaseAuth, googleProvider);
     } catch (error: any) {
       if (error?.code === "auth/popup-blocked") {
@@ -110,7 +127,8 @@ export function AuthProvider({
     }
   }, [isSigningIn]);
 
-  const signInWithEmail = useCallback(async (email: string, pass: string) => {
+  const signInWithEmail = useCallback(async (email: string, pass: string, role: Role = "user") => {
+    if (role) localStorage.setItem("intended_role", role);
     await signInWithEmailAndPassword(firebaseAuth, email, pass);
   }, []);
 

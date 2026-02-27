@@ -97,22 +97,36 @@ export default function CallPage() {
 
       setLoadingToken(true);
       try {
+        // 1. Verify Membership beforehand to avoid unnecessary server calls
+        if (snap.exists()) {
+          const sessionData = snap.data() as Session;
+          if (sessionData.userId !== user.firebaseUser.uid && sessionData.astroId !== user.firebaseUser.uid) {
+            console.error("User is not a participant in this session.");
+            router.replace("/dashboard");
+            return;
+          }
+        }
+
+        const idToken = await user.firebaseUser.getIdToken();
         const res = await fetch("http://localhost:5005/token", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${idToken}`
+          },
           body: JSON.stringify({
-            room: sessionId,
-            identity: user.firebaseUser.uid,
+            room: sessionId
           }),
         });
 
         if (!res.ok) {
-          console.error("Token server response NOT OK:", res.status, res.statusText);
-          throw new Error("Failed to fetch LiveKit token");
+          const errorData = await res.json();
+          console.error("Token server error:", errorData.error);
+          throw new Error(errorData.error || "Failed to fetch LiveKit token");
         }
 
         const data = await res.json() as CreateRoomTokenResponse;
-        console.log("Fetched token successfully. WS URL:", data.wsUrl);
+        console.log("Fetched token successfully.");
 
         setToken(data.token);
         setWsUrl(data.wsUrl);

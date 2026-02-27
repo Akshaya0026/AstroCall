@@ -29,7 +29,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     try {
-      await signInWithEmail(email, password);
+      await signInWithEmail(email, password, loginRole);
     } catch (err: any) {
       setError(err.message || "Failed to sign in. Please check your credentials.");
     }
@@ -64,8 +64,8 @@ export default function LoginPage() {
               <button
                 onClick={() => setLoginRole("user")}
                 className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-all ${loginRole === "user"
-                    ? "bg-amber-500 text-black shadow-lg"
-                    : "text-zinc-500 hover:text-zinc-300"
+                  ? "bg-amber-500 text-black shadow-lg"
+                  : "text-zinc-500 hover:text-zinc-300"
                   }`}
               >
                 For Users
@@ -73,8 +73,8 @@ export default function LoginPage() {
               <button
                 onClick={() => setLoginRole("astrologer")}
                 className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-all ${loginRole === "astrologer"
-                    ? "bg-amber-500 text-black shadow-lg"
-                    : "text-zinc-500 hover:text-zinc-300"
+                  ? "bg-amber-500 text-black shadow-lg"
+                  : "text-zinc-500 hover:text-zinc-300"
                   }`}
               >
                 For Astrologers
@@ -125,7 +125,7 @@ export default function LoginPage() {
 
               <button
                 type="button"
-                onClick={signInWithGoogle}
+                onClick={() => signInWithGoogle(loginRole)}
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 py-4 text-sm font-semibold text-white hover:bg-zinc-800 transition-all"
               >
