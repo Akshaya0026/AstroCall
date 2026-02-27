@@ -30,13 +30,13 @@ export default function Navbar() {
             name: "Browse",
             href: "/astrologers",
             icon: Search,
-            show: true
+            show: user?.role === "user" || !user
         },
         {
             name: "Dashboard",
-            href: "/astro",
+            href: user?.role === "astrologer" ? "/astro" : "/dashboard",
             icon: LayoutDashboard,
-            show: user?.role === "astrologer"
+            show: !!user
         },
         {
             name: "Profile",
@@ -66,8 +66,8 @@ export default function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${isActive
-                                                ? "bg-amber-500/10 text-amber-500"
-                                                : "text-zinc-400 hover:text-white hover:bg-white/5"
+                                            ? "bg-amber-500/10 text-amber-500"
+                                            : "text-zinc-400 hover:text-white hover:bg-white/5"
                                             }`}
                                     >
                                         <link.icon className="h-4 w-4" />

@@ -58,16 +58,20 @@ export default function Home() {
               No apps. No friction. Just guidance when you need it.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href={user ? "/astrologers" : "/login"}>
+              <Link href={user ? (user.role === "astrologer" ? "/astro" : "/astrologers") : "/login"}>
                 <Button size="lg">
-                  {user ? "See online astrologers" : "Start with sign in"}
+                  {user
+                    ? (user.role === "astrologer" ? "Go to your dashboard" : "See online astrologers")
+                    : "Start with sign in"}
                 </Button>
               </Link>
-              <Link href="/astrologers">
-                <Button variant="ghost" size="lg">
-                  Browse astrologers
-                </Button>
-              </Link>
+              {(!user || user.role === "user") && (
+                <Link href="/astrologers">
+                  <Button variant="ghost" size="lg">
+                    Browse astrologers
+                  </Button>
+                </Link>
+              )}
             </div>
             <dl className="mt-6 grid max-w-xl grid-cols-2 gap-6 text-xs text-zinc-400 sm:text-sm">
               <div>

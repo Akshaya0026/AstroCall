@@ -13,6 +13,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [loginRole, setLoginRole] = useState<"user" | "astrologer">("user");
+
   useEffect(() => {
     if (!loading && user) {
       if (user.role === "astrologer") {
@@ -57,7 +59,29 @@ export default function LoginPage() {
               Consult the Heavens
             </h1>
 
-            <form onSubmit={handleEmailLogin} className="mt-10 w-full space-y-4">
+            {/* Role Selection Tabs */}
+            <div className="mt-8 flex w-full gap-2 rounded-2xl bg-zinc-950/50 p-1 border border-zinc-800">
+              <button
+                onClick={() => setLoginRole("user")}
+                className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-all ${loginRole === "user"
+                    ? "bg-amber-500 text-black shadow-lg"
+                    : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+              >
+                For Users
+              </button>
+              <button
+                onClick={() => setLoginRole("astrologer")}
+                className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-all ${loginRole === "astrologer"
+                    ? "bg-amber-500 text-black shadow-lg"
+                    : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+              >
+                For Astrologers
+              </button>
+            </div>
+
+            <form onSubmit={handleEmailLogin} className="mt-8 w-full space-y-4">
               <div className="space-y-4">
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
@@ -90,7 +114,7 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full rounded-2xl bg-amber-500 py-6 text-sm font-bold text-black hover:bg-amber-400 active:scale-[0.98] transition-all"
               >
-                {loading ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-black/20 border-t-black" /> : "Sign In"}
+                {loading ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-black/20 border-t-black" /> : `Sign In as ${loginRole === "user" ? "User" : "Astrologer"}`}
               </Button>
 
               <div className="relative flex items-center gap-4 py-2">
