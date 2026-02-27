@@ -1,6 +1,20 @@
-# AstroCall v1 
+# AstroCall v1 🌌
 
-Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a modern platform built for seamless celestial guidance.
+Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a premium, secure platform built for seamless celestial guidance, combining modern web aesthetics with robust security.
+
+## 🚀 Recent Core Improvements
+
+### 1. Unified Astrologer Onboarding
+- **Role Selection**: Integrated role selection (User vs. Astrologer) directly into the premium login flow.
+- **Automated Provisioning**: New astrologers automatically receive a pre-configured professional profile document in Firestore.
+- **Dedicated Dashboards**: Automatic redirection to specialized dashboards based on authenticated roles.
+
+### 2. Security Hardening & Zero-Trust Architecture
+- **Authenticated Token Server**: The LiveKit token generation server now validates Firebase ID tokens and verifies session membership before granting access.
+- **Secure Firestore Rules**: Implementation of granular, role-based access control (RBAC). Direct modification of sensitive fields like `role` is blocked at the database level.
+- **Membership Validation**: Cross-verification of session participants on both frontend and backend to prevent unauthorized access to private rooms.
+- **Session Lifecycle**: Enhanced session management (Pending -> Active -> Ended) ensures tokens are only issued for valid, authorized windows.
+
 ## 📸 Visual Tour
 
 | Premium Login | Astrologer Directory |
@@ -11,65 +25,66 @@ Consult the heavens with India's most trusted astrologers through secure, high-d
 | :---: | :---: |
 | ![Profile](./docs/assets/profile.png) | ![Dashboard](./docs/assets/dashboard.png) |
 
-
 ## 🌟 Key Features
-- **Real-time Video & Voice**: Crystal clear communication powered by LiveKit.
-- **Premium Aesthetics**: Glassmorphic UI with modern dark mode and smooth animations.
-- **Role-Based Access**: Dedicated environments for both Users and Astrologers.
-- **Session Management**: Track call durations, status, and history.
-- **Rating System**: Integrated feedback loop for quality assurance.
+- **Crystal Clear Video**: High-definition video and voice consultation powered by LiveKit.
+- **Glassmorphic Design**: A stunning, premium UI with smooth animations and dynamic hover states.
+- **Real-time Availability**: Instant feedback on which astrologers are online and ready to consult.
+- **In-depth Reviews**: Verified rating system for seekers to share their consultation experiences.
 
-## 🎭 Roles & Permissions
+## 🛠️ Architecture & Tech Stack
+- **Frontend**: [Next.js 15](https://nextjs.org/) (App Router), [Tailwind CSS](https://tailwindcss.com/), [Lucide](https://lucide.dev/).
+- **Real-time Comms**: [LiveKit Cloud](https://livekit.io/) & [LiveKit Components](https://docs.livekit.io/components/react/).
+- **Backend/Database**: [Firebase Auth](https://firebase.google.com/products/auth) & [Cloud Firestore](https://firebase.google.com/products/firestore).
+- **Environment**: Container-ready structure with clean dependency separation.
 
-### 👤 User
-- **Discovery**: Browse the list of online astrologers in real-time.
-- **Engagement**: Start instant video sessions with one click.
-- **Dashboard**: Track past sessions, guidance minutes, and leave ratings.
-- **Profile**: Manage personal identity and account settings.
+## 🎭 Role-Based Workflows
 
-### 🔮 Astrologer
-- **Presence**: Toggle "Online" status to appear in the public directory.
-- **Management**: Dedicated dashboard to track today's sessions and active calls.
-- **Professionalism**: Secure, private environment to consult with seekers.
+### 👤 For Seekers (Users)
+1. **Browse**: Explore the galaxy of online astrologers.
+2. **Consult**: Start an instant session with a secure, private room.
+3. **Reflect**: Manage consultation history and leave ratings from a personalized dashboard.
 
-## 🛠️ Tech Stack
-- **Frontend**: Next.js 16 (App Router), Tailwind CSS, Lucide Icons.
-- **Real-time**: LiveKit Cloud & LiveKit Components.
-- **Backend/Auth**: Firebase Auth & Firestore.
-- **Styling**: Premium Glassmorphism & Framer Motion.
+### 🔮 For Astrologers
+1. **Presence**: Control your visibility with a simple "Go Online" toggle.
+2. **Dashboard**: Manage incoming consultation requests and track today's engagement.
+3. **Profile**: Update professional bio, languages, and expertise directly from your dashboard.
 
-## 🚀 Local Setup & Development
+## 💻 Local Setup & Development
 
 ### 1. Prerequisites
-- Node.js 18+
-- Firebase CLI (`npm install -g firebase-tools`)
+- **Node.js**: 18.x or higher
+- **Firebase CLI**: `npm install -g firebase-tools`
 
-### 2. LiveKit Token Server
+### 2. Start LiveKit Token Server
+The token server handles authenticated requests to join video rooms.
 ```bash
 cd livekit-server
 npm install
 node server.js
 ```
-*Runs on http://localhost:5005*
+*Port: 5005 (Requires `.env` with LK_API_KEY, LK_API_SECRET, and Firebase Emulator hosts)*
 
-### 3. Firebase Emulators
+### 3. Start Firebase Emulators
+We use local emulators for a leak-proof development cycle.
 ```bash
-# In the root directory
-npx firebase-tools emulators:start --only auth,firestore
+# From the project root
+firebase emulators:start
 ```
-*Management UI on http://localhost:4000*
+*UI: http://localhost:4000*
 
-### 4. Frontend
+### 4. Run the Next.js App
 ```bash
 cd astrocall-web
 npm install
 npm run dev
 ```
-*Next.js runs on http://localhost:3000*
+*UI: http://localhost:3000*
 
-## 🔐 Tester Accounts
-- **User**: `user@test.com` / `password123`
-- **Astrologer**: `astro@test.com` / `password123`
+## 🔐 Local Test Credentials
+| Account Type | Email | Password |
+| :--- | :--- | :--- |
+| **Astrologer** | `test-astro@example.com` | `password` |
+| **User** | `test-user@example.com` | `password` |
 
 ---
-
+*Built with ✨ by the AstroCall Team.*
