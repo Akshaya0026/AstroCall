@@ -2,7 +2,7 @@
 
 Consult the heavens with India's most trusted astrologers through secure, high-definition video sessions. AstroCall is a premium, secure platform built for seamless celestial guidance, combining modern web aesthetics with robust security.
 
-## 🚀 Recent Core Improvements
+## Recent Core Improvements
 
 ### 1. Unified Astrologer Onboarding
 - **Role Selection**: Integrated role selection (User vs. Astrologer) directly into the premium login flow.
@@ -15,7 +15,7 @@ Consult the heavens with India's most trusted astrologers through secure, high-d
 - **Membership Validation**: Cross-verification of session participants on both frontend and backend to prevent unauthorized access to private rooms.
 - **Session Lifecycle**: Enhanced session management (Pending -> Active -> Ended) ensures tokens are only issued for valid, authorized windows.
 
-## 📸 Visual Tour
+## Visual Tour
 
 | Premium Login | Astrologer Directory |
 | :---: | :---: |
@@ -25,31 +25,31 @@ Consult the heavens with India's most trusted astrologers through secure, high-d
 | :---: | :---: |
 | ![Profile](./docs/assets/profile.png) | ![Dashboard](./docs/assets/dashboard.png) |
 
-## 🌟 Key Features
+## Key Features
 - **Crystal Clear Video**: High-definition video and voice consultation powered by LiveKit.
 - **Glassmorphic Design**: A stunning, premium UI with smooth animations and dynamic hover states.
 - **Real-time Availability**: Instant feedback on which astrologers are online and ready to consult.
 - **In-depth Reviews**: Verified rating system for seekers to share their consultation experiences.
 
-## 🛠️ Architecture & Tech Stack
+## Architecture & Tech Stack
 - **Frontend**: [Next.js 15](https://nextjs.org/) (App Router), [Tailwind CSS](https://tailwindcss.com/), [Lucide](https://lucide.dev/).
 - **Real-time Comms**: [LiveKit Cloud](https://livekit.io/) & [LiveKit Components](https://docs.livekit.io/components/react/).
 - **Backend/Database**: [Firebase Auth](https://firebase.google.com/products/auth) & [Cloud Firestore](https://firebase.google.com/products/firestore).
 - **Environment**: Container-ready structure with clean dependency separation.
 
-## 🎭 Role-Based Workflows
+## Role-Based Workflows
 
-### 👤 For Seekers (Users)
+### For Seekers (Users)
 1. **Browse**: Explore the galaxy of online astrologers.
 2. **Consult**: Start an instant session with a secure, private room.
 3. **Reflect**: Manage consultation history and leave ratings from a personalized dashboard.
 
-### 🔮 For Astrologers
+### For Astrologers
 1. **Presence**: Control your visibility with a simple "Go Online" toggle.
 2. **Dashboard**: Manage incoming consultation requests and track today's engagement.
 3. **Profile**: Update professional bio, languages, and expertise directly from your dashboard.
 
-## 💻 Local Setup & Development
+## Local Setup & Development
 
 ### 1. Prerequisites
 - **Node.js**: 18.x or higher
@@ -80,11 +80,11 @@ npm run dev
 ```
 *UI: http://localhost:3000*
 
-## 🔐 Local Test Credentials
+## Local Test Credentials
 | Account Type | Email | Password |
 | :--- | :--- | :--- |
 | **Astrologer** | `test-astro@example.com` | `password` |
 | **User** | `test-user@example.com` | `password` |
 
 ---
-*Built with ✨ by the AstroCall Team.*
+
